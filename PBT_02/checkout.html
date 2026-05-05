@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Thanh Toán Đơn Hàng</title>
+  </head>
+  <body>
+    <h2>Giỏ hàng của bạn</h2>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>STT</th>
+          <th>Sản phẩm</th>
+          <th>Đơn giá</th>
+          <th>Số lượng</th>
+          <th>Thành tiền</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>MacBook Air M1</td>
+          <td>18.000.000</td>
+          <td>1</td>
+          <td>18.000.000</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Chuột Magic Mouse</td>
+          <td>2.000.000</td>
+          <td>1</td>
+          <td>2.000.000</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Ốp lưng MacBook</td>
+          <td>500.000</td>
+          <td>2</td>
+          <td>1.000.000</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="4"><strong>Tổng cộng</strong></td>
+          <td><strong>21.000.000</strong></td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <hr />
+
+    <form action="#">
+      <h2>Thông tin thanh toán</h2>
+
+      <p>Phương thức thanh toán:</p>
+      <input type="radio" name="payment" id="cod" value="COD" checked />
+      <label for="cod">COD (Thanh toán khi nhận hàng)</label><br />
+
+      <input type="radio" name="payment" id="bank" value="Bank" />
+      <label for="bank">Chuyển khoản ngân hàng</label><br />
+
+      <input type="radio" name="payment" id="wallet" value="Wallet" />
+      <label for="wallet">Ví điện tử</label>
+
+      <p>Mã giảm giá (VD: SALE2026):</p>
+      <input
+        type="text"
+        name="coupon"
+        pattern="SALE[0-9]{4}"
+        placeholder="SALE1234"
+      />
+
+      <p>Ghi chú:</p>
+      <textarea
+        name="note"
+        rows="4"
+        cols="30"
+        placeholder="Yêu cầu thêm..."
+      ></textarea>
+
+      <hr />
+
+      <h2>Thông tin giao hàng</h2>
+
+      <p>Ngày giao hàng mong muốn:</p>
+      <input type="date" name="delivery_date" min="2026-05-06" />
+
+      <p>Khung giờ:</p>
+      <select name="time_slot">
+        <option value="morning">Sáng 8-12h</option>
+        <option value="afternoon">Chiều 14-18h</option>
+        <option value="evening">Tối 18-21h</option>
+      </select>
+
+      <p>Số ngày giao hàng dự kiến:</p>
+      <input type="range" name="days" min="1" max="7" step="1" value="3" />
+
+      <br /><br />
+      <button type="submit" aria-label="Xác nhận đặt hàng">
+        Xác nhận đặt hàng
+      </button>
+    </form>
+  </body>
+</html>

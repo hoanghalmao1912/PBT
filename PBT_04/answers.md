@@ -64,3 +64,81 @@ Hàng 3: Item 7 nằm ở cột đầu tiên bên trái, hai cột còn lại đ
 <img src="/Users/hanguyen/Documents/PBT/PBT_04/screenshots/Screenshot 2026-05-10 at 18.48.12.png" width="500" alt="" >
 
 <img src="/Users/hanguyen/Documents/PBT/PBT_04/screenshots/Screenshot 2026-05-10 at 18.48.51.png" width="500" alt="" >
+
+## PHẦN C — SUY LUẬN (20 điểm)
+
+### Câu C1 (10đ) — Flexbox vs Grid: Khi nào dùng gì?
+
+1. Navigation bar ngang (logo + menu + buttons)
+
+- Lựa chọn: Flexbox
+- Giải thích: Navbar là layout 1 chiều (ngang). Flexbox cực kỳ mạnh mẽ trong việc phân bổ không gian giữa các phần tử (logo sang trái, menu ra giữa, nút sang phải) bằng justify-content và căn giữa theo chiều dọc bằng align-items
+
+2. Lưới ảnh Instagram (3 cột đều nhau, số ảnh không biết trước)
+
+- Lựa chọn: Grid
+- Giải thích: Đây là layout 2 chiều dạng bảng Grid giúp cố định 3 cột đều nhau cực nhanh với grid-template-columns: repeat(3, 1fr). Khi số lượng ảnh tăng lên, chúng sẽ tự động xuống dòng và giữ đúng cấu trúc cột mà không cần tính toán margin
+
+3. Layout blog: main content + sidebar
+
+- Lựa chọn: Grid
+- Giải thích: Grid phù hợp để phân chia khung sườn chính (main layout) của trang web và có thể dễ dàng thiết lập tỷ lệ cố định cho Sidebar và phần nội dung chính co giãn (1fr) một cách tường minh.
+
+4. Footer với 4 cột thông tin (Về chúng tôi, Liên kết, Hỗ trợ, Liên hệ)
+
+- Lựa chọn: Flexbox hoặc Grid
+- Giải thích:
+
+* Flexbox: Tốt nếu bạn muốn các cột tự co giãn linh hoạt dựa trên độ dài của chữ bên trong.
+* Grid: Tốt nếu bạn muốn 4 cột luôn thẳng hàng tuyệt đối và đều
+
+5. Card sản phẩm (ảnh trên, text giữa, nút dưới — nút luôn dính đáy)
+
+- Lựa chọn: Kết hợp cả hai
+- Giải thích: \* Grid (ngoài): Dùng để sắp xếp các Card trên trang web thành các hàng và cột
+- Flexbox (trong): Dùng bên trong mỗi Card và thiết lập Card là display: flex với flex-direction: column. Khi đó, bạn chỉ cần cho phần text ở giữa thuộc tính flex: 1, nó sẽ tự nở ra để đẩy nút bấm luôn xuống dính sát đáy Card bất kể nội dung dài hay ngắn
+
+### Câu C2 (10đ) — Debug Flexbox
+
+#### Lỗi 1
+
+1. Mô tả lỗi
+
+- Lỗi này xảy ra do cơ chế mặc định của Flexbox:
+- Khi các card nằm trong một card-container có display: flex, chúng sẽ cố gắng cao bằng nhau trong cùng một hàng (nhờ thuộc tính mặc định align-items: stretch)
+- Tuy nhiên, các thành phần bên trong mỗi card (như tiêu đề, đoạn mô tả) lại có độ dài nội dung khác nhau
+- Vì các thành phần bên trong card đang được xếp chồng một cách tự nhiên (Flow layout), phần nào có chữ dài hơn sẽ đẩy nút bấm xuống thấp hơn, còn card ít chữ thì nút sẽ bị kéo ngược lên trên
+
+2. Cách sửa
+
+- Biến từng Card thành một Flex Container
+- thêm thuộc tính flex-grow: 1 vào phần nội dung nằm giữa ảnh và nút bấm . Khi đó, phần nội dung này sẽ tự động giãn ra để chiếm toàn bộ khoảng trống còn dư trong card
+
+<img src="/Users/hanguyen/Documents/PBT/PBT_04/screenshots/Screenshot 2026-05-10 at 19.20.49.png" width="500" alt="" >
+
+#### Lỗi 2
+
+1. Mô tả lỗi
+
+- Thiếu thuộc tính căn chỉnh: Thuộc tính text-align: center chỉ có tác dụng căn giữa các dòng văn bản bên trong khối .hero-content, nó không có khả năng di chuyển cả khối đó ra giữa màn hình
+- Trục ngang và dọc: Để căn giữa một phần tử con trong Flexbox, bạn cần tác động vào cả Trục chính (Main Axis) và Trục phụ (Cross Axis) của container cha
+
+2. Cách sửa
+
+- Căn giữa theo chiều ngang: Thêm justify-content: center; Thuộc tính này sẽ đẩy các item con ra giữa theo trục nằm ngang
+- Căn giữa theo chiều dọc: Thêm align-items: center; thuộc tính này sẽ giúp nội dung đặt xuống đúng giữa chiều cao của trình duyệt
+
+<img src="/Users/hanguyen/Documents/PBT/PBT_04/screenshots/Screenshot 2026-05-10 at 19.25.18.png" width="500" alt="" >
+
+#### Lỗi 3
+
+1. Mô tả lỗi
+
+- Lỗi này xuất phát từ cơ chế mặc định của Flexbox là flex-shrink
+- Mặc dù đã đặt width: 250px, nhưng trong Flexbox, giá trị này chỉ được coi là chiều rộng lý tưởng. Khi phần .content có quá nhiều nội dung hoặc chứa các phần tử không thể xuống dòng (như ảnh lớn, bảng, hoặc chuỗi văn bản dài), Flexbox sẽ ưu tiên nhường không gian cho phần nội dung chính và tự động co (shrink) chiều rộng của Sidebar lại để tránh làm tràn khung hình
+
+2. Cách sửa
+
+- Thêm thuộc tính flex-shrink: 0 cho .sidebar. Thuộc tính này ra lệnh cho trình duyệt trong bất kỳ tình huống nào, không được phép co kích thước của phần tử này nhỏ hơn chiều rộng đã định
+
+<img src="/Users/hanguyen/Documents/PBT/PBT_04/screenshots/Screenshot 2026-05-10 at 19.29.35.png" width="500" alt="" >

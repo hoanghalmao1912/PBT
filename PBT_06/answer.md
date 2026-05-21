@@ -61,3 +61,41 @@ Spacing utilities trong Bootstrap được cấu tạo theo cú pháp: `{thuộc
 | **`.container`**       | Có chiều rộng cố định (`max-width`) thay đổi tại từng điểm ngắt (sm, md, lg, xl, xxl).                                                            | Dùng khi muốn nội dung nằm gọn ở giữa màn hình, có lề trống ở hai bên.                                      |
 | **`.container-fluid`** | Luôn chiếm **100% chiều rộng** ở mọi kích thước màn hình, từ nhỏ nhất đến lớn nhất.                                                               | Dùng cho các section trải dài toàn màn hình (như header, footer, banner).                                   |
 | **`.container-md`**    | Chiếm 100% chiều rộng ở màn hình nhỏ (< 768px). Từ màn hình **md** (≥ 768px) trở lên, nó mới hoạt động giống `.container` (có max-width cố định). | Dùng khi muốn nội dung tràn viền trên điện thoại nhưng lại được đóng khung gọn gàng trên tablet và desktop. |
+
+### PHẦN C — PHÂN TÍCH (20 điểm)
+
+### Câu C1 (10đ) — Tùy biến Bootstrap
+
+**1. Quy trình đổi màu `$primary` sang `#E63946`:**
+
+- **Công cụ:** Node.js, NPM, và công cụ biên dịch SASS (Sass compiler).
+- **Quy trình:**
+  1. Tạo file `custom.scss`.
+  2. Khai báo màu mới trước khi import Bootstrap:
+     ```scss
+     $primary: #e63946;
+     @import "node_modules/bootstrap/scss/bootstrap";
+     ```
+  3. Biên dịch file `custom.scss` thành file `.css` để dùng.
+
+**2. Tại sao nên dùng SASS variables thay vì override trực tiếp?**
+
+- **Đồng bộ:** Đổi 1 biến SASS tự động áp dụng cho toàn hệ thống (nút, viền, chữ, background...). Override thủ công phải sửa hàng chục chỗ.
+- **Tính toán tự động:** SASS tự động tạo ra các màu hover, active tương ứng.
+- **Tối ưu code:** Tránh code rác, không phải lạm dụng `!important`.
+
+---
+
+### Câu C2 (10đ) — So sánh CSS thuần vs Bootstrap
+
+**1. So sánh Navbar & Product Card:**
+| Tiêu chí | CSS Thuần | Bootstrap |
+| :--- | :--- | :--- |
+| **Số dòng CSS tự viết** | Nhiều (hàng trăm dòng) | Không cần viết (0 dòng) |
+| **Thời gian phát triển** | Chậm (phải tự fix responsive) | Rất nhanh (copy/paste class) |
+| **Khả năng tùy biến** | Cao nhất (thiết kế tự do) | Thấp (bị gò bó theo theme có sẵn) |
+
+**2. Khi nào NÊN và KHÔNG NÊN dùng Bootstrap?**
+
+- **NÊN:** Làm Admin Dashboard, web nội bộ, làm sản phẩm chạy thử (MVP) cần tốc độ nhanh.
+- **KHÔNG NÊN:** Làm Landing page nghệ thuật, web cần nhận diện thương hiệu độc quyền, hoặc có bản design (Figma) quá khác biệt so với chuẩn Bootstrap.

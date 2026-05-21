@@ -76,8 +76,67 @@ const url = `[https://api.example.com/users/$](https://api.example.com/users/$){
 
 // Cách 3:
 const html = `<div class="card">
+
 <h2>${title}</h2>
     <p>${description}</p>
 <span>Giá: ${price}đ</span>
 
 </div>`;
+
+## PHẦN C — SUY LUẬN (20 điểm)
+
+### Câu C1 (10đ) — Debug JavaScript
+
+**1. Liệt kê 6 lỗi & Cách sửa:**
+
+1. **Lỗi logic so sánh:** `if (giaSauGiam = 0)` là phép gán biến, luôn sai.
+   -> _Sửa:_ Dùng so sánh tuyệt đối `if (giaSauGiam === 0)`.
+2. **Sai kiểu dữ liệu:** Truyền `"100000"` (String) thay vì số.
+   -> _Sửa:_ Truyền số nguyên `100000`.
+3. **Lỗi "Ẩn" với `var` trong vòng lặp:** `var` có phạm vi hàm (function scope), khi `setTimeout` chạy thì vòng lặp đã kết thúc, `i` luôn bằng 5.
+   -> _Sửa:_ Đổi `var i` thành `let i` (block scope) để mỗi vòng lặp lưu một giá trị `i` riêng biệt.
+4. **Kiểu trả về bất nhất:** Hàm trả về chuỗi khi lỗi, trả về số khi tính đúng.
+   -> _Sửa:_ Dùng `throw new Error("Lỗi")` để xử lý ngoại lệ chuẩn.
+5. **Dùng `var` lỗi thời:** Khai báo `var giamGia` không an toàn.
+   -> _Sửa:_ Dùng `const giamGia` vì giá trị không bị gán lại.
+6. **Thiếu validation:** Không kiểm tra `giaBan` hợp lệ.
+   -> _Sửa:_ Thêm `if (typeof giaBan !== 'number' || giaBan < 0)`.
+
+**2. Code hoàn chỉnh:**
+
+```javascript
+function tinhGiaGiamGia(giaBan, phanTramGiam) {
+  if (typeof giaBan !== "number" || giaBan < 0) {
+    throw new Error("Giá bán không hợp lệ");
+  }
+  if (phanTramGiam < 0 || phanTramGiam > 100) {
+    throw new Error("Phần trăm giảm không hợp lệ");
+  }
+
+  const giamGia = (giaBan * phanTramGiam) / 100;
+  let giaSauGiam = giaBan - giamGia;
+
+  if (giaSauGiam === 0) {
+    console.log("Sản phẩm miễn phí!");
+  }
+
+  return giaSauGiam;
+}
+
+// Test
+const gia = tinhGiaGiamGia(100000, 20);
+console.log("Giá sau giảm: " + gia + "đ");
+
+try {
+  const gia2 = tinhGiaGiamGia(50000, 110);
+  console.log("Giá: " + gia2);
+} catch (e) {
+  console.log(e.message);
+}
+
+for (let i = 0; i < 5; i++) {
+  setTimeout(function () {
+    console.log("Item " + i);
+  }, 1000);
+}
+```

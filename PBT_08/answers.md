@@ -101,3 +101,59 @@ console.log(product.price); // 25990000 (Không đổi)
 console.log(product.specs.ram); // 16
 
 - Tại sao product.specs.ram ra 16? Toán tử Spread ... chỉ thực hiện sao chép nông (shallow copy) ở tầng đầu tiên. Object con specs vẫn được truyền dưới dạng tham chiếu (reference) dùng chung bộ nhớ với object gốc product. Thay đổi ở bản copy sẽ làm thay đổi cả bản gốc.
+
+## PHẦN C — SUY LUẬN (20 điểm)
+
+### Câu C1 (10đ) — Refactor Code
+
+```javascript
+const processOrders = (orders) =>
+  orders
+    .filter(({ status, total }) => status === "completed" && total > 100000)
+    .map(({ id, customer, total }) => {
+      const discount = total * 0.1;
+      return { id, customer, total, discount, finalTotal: total - discount };
+    })
+    .sort((a, b) => b.finalTotal - a.finalTotal);
+```
+
+### Câu C2
+
+```javscript
+
+const miniArray = {
+map(arr, fn) {
+const result = [];
+for (let i = 0; i < arr.length; i++) {
+result.push(fn(arr[i], i, arr));
+}
+return result;
+},
+
+    filter(arr, fn) {
+        const result = [];
+        for (let i = 0; i < arr.length; i++) {
+            if (fn(arr[i], i, arr)) result.push(arr[i]);
+        }
+        return result;
+    },
+
+    reduce(arr, fn, initialValue) {
+        let acc = initialValue !== undefined ? initialValue : arr[0];
+        let startIndex = initialValue !== undefined ? 0 : 1;
+
+        for (let i = startIndex; i < arr.length; i++) {
+            acc = fn(acc, arr[i], i, arr);
+        }
+        return acc;
+    }
+
+};
+
+// Test
+console.log(miniArray.map([1,2,3], x => x \* 2)); // → [2, 4, 6]
+console.log(miniArray.filter([1,2,3,4], x => x > 2)); // → [3, 4]
+console.log(miniArray.reduce([1,2,3,4], (a,b) => a+b, 0)); // → 10
+
+
+```
